@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from re import sub
 import paho.mqtt.client as mqtt
 from datetime import datetime
 import os
@@ -7,6 +8,7 @@ import time
 import json
 import threading
 import logging as log
+import subprocess
 
 log.basicConfig(filename='/var/tmp/job.log', filemode='w', level=log.INFO, format='[%(asctime)s]- %(message)s', datefmt='%d-%m-%Y %I:%M:%S %p')
 
@@ -63,6 +65,16 @@ def parse(jobconfig,client):
 			if 'Device-Off-Time' in jobconfig['device']:
 				offTime=jobconfig['device']['Device-Off-Time']
 				updateData("device",{"OFF_TIME":offTime})
+
+			if 'Time-Zone' in jobconfig['device']:
+				timeZone=jobconfig['device']['Time-Zone']
+				updateData("device",{"Time-Zone":timeZone})
+				subprocess.run(['timedatectl','set-timezone',timeZone])
+
+			if 'Get-All-Logs' in jobconfig['getLogs']:
+				#implement the logic of uploading all the logs starting in a separate thread
+				pass
+			
 			log.info("JOB RECIEVED and PARSED Successfully..")
 	except:
 		log.info("Tried to parsed and failed..")

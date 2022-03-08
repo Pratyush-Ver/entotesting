@@ -81,13 +81,16 @@ def mainLoop():
             duration=int(data['device']['TEST_DURATION'])*60
             testDevice(duration)
         
-        ON_TIME=int(data['device']['ON_TIME'])
-        OFF_TIME=int(data['device']['OFF_TIME'])
-        curTime=datetime.now().hour
-        
+        ON_TIME,ON_MINUTES=map(int,data['device']['ON_TIME'].split(":"))
+        OFF_TIME,OFF_MINUTES=map(int,data['device']['OFF_TIME'].split(":"))
+
+        curTime=datetime.now()
+        curMinute=curTime.minute
+        curTime=curTime.hour
+
         #Implement the raw logic of testFlag
 
-        if ON_TIME<=curTime and curTime<OFF_TIME:
+        if ON_TIME<=curTime and curTime<OFF_TIME and ON_MINUTES<=curMinute and curMinute<OFF_MINUTES:
             if not scriptStatus:
                 #Start both the services and write the status of the service in the status file
                 subprocess.call(["systemctl","restart","cam"])
