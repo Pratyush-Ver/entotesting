@@ -9,6 +9,7 @@ import json
 import threading
 import logging as log
 import subprocess
+from logsUpload import upload_log_file
 
 log.basicConfig(filename='/var/tmp/job.log', filemode='w', level=log.INFO, format='[%(asctime)s]- %(message)s', datefmt='%d-%m-%Y %I:%M:%S %p')
 
@@ -72,8 +73,8 @@ def parse(jobconfig,client):
 				subprocess.run(['timedatectl','set-timezone',timeZone])
 
 			if 'Get-All-Logs' in jobconfig['getLogs']:
-				#implement the logic of uploading all the logs starting in a separate thread
-				pass
+				log_thread = threading.Thread(name='upload_log_file', target = upload_log_file)
+				log_thread.start()
 			
 			log.info("JOB RECIEVED and PARSED Successfully..")
 	except:
