@@ -1,4 +1,6 @@
 #!/bin/sh
+ifconfig wwan0 down
+qmi-network /dev/cdc-wdm0 stop
 qmi-network /dev/cdc-wdm0 start
 udhcpc -q -f -i wwan0
 cat <<EOF >/etc/resolv.conf
