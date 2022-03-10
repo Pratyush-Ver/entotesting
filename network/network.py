@@ -80,7 +80,7 @@ def first_check():
         print(not_live)
         #------------------------
         #--reconnecting using 4g routine--
-        time.sleep(10)
+        time.sleep(5)
         subprocess.call(["/usr/sbin/4g/4g.sh"])
         #------------------------
         with open(FILE, "a") as file:
@@ -93,6 +93,7 @@ def first_check():
 def main():
    
     # main function to call functions
+    time.sleep(8)
     monitor_start_time = datetime.datetime.now()
     monitoring_date_time = "monitoring started at: " + \
         str(monitor_start_time).split(".")[0]
