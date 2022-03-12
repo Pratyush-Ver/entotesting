@@ -144,18 +144,20 @@ def upload_manager(filesList):
 
 def main():
 	log.info("Cloud Main started..")
-	while True:
-		if provisionstatus=="True":
-			while len(os.listdir(BUFFER_IMAGES_PATH)):
-				filesList = os.listdir(BUFFER_IMAGES_PATH)[:10]
-				log.info("Calling upload manager..")
+	if provisionstatus=="True":
+		while len(os.listdir(BUFFER_IMAGES_PATH)):
+			filesList = os.listdir(BUFFER_IMAGES_PATH)[:10]
+			log.info("Calling upload manager..")
+			try:
 				upload_manager(filesList)
-				log.info("Upload manager successfully executed..")
-			log.info("-"*50)
-			time.sleep(1)
-		else:
-			log.info("I m running but provison status is False")
-			time.sleep(10)
+			except Exception as e:
+				log.info("Upload failed /n"+str(e))
+				time.sleep(5)	
+		log.info("Upload manager successfully executed..")
+		log.info("-"*50)
+		time.sleep(1)
+	else:
+		log.info("I m running but provison status is False")
 
 
 
