@@ -105,8 +105,9 @@ def mainLoop():
         if compareTime(curHour,curMinute,ON_HOUR,ON_MINUTES,OFF_HOUR,OFF_MINUTES):
             if not scriptStatus:
                 #Start both the services and write the status of the service in the status file
+                subprocess.call(["systemctl","stop","cloud"])
                 subprocess.call(["systemctl","restart","cam"])
-                subprocess.call(["systemctl","restart","cloud"])
+                subprocess.call(["systemctl","restart","weather"])
                 writeInScriptStatus(True)
                 log.info("Cam and upload service started")
         else:
@@ -114,7 +115,8 @@ def mainLoop():
             if scriptStatus:
                 #Stop the service
                 subprocess.call(["systemctl","stop","cam"])
-                subprocess.call(["systemctl","stop","cloud"])
+                subprocess.call(["systemctl","stop","weather"])
+                subprocess.call(["systemctl","restart","cloud"])
                 writeInScriptStatus(False)
                 log.info("Cam and upload service stopped")
     
