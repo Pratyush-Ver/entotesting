@@ -2,8 +2,14 @@ import datetime as dt
 import subprocess
 import time
 import logging as log
+import json
 log.basicConfig(filename='/var/tmp/weather.log', filemode='w', level=log.INFO, format='[%(asctime)s]- %(message)s', datefmt='%d-%m-%Y %I:%M:%S %p')
-BUFFER_IMAGES_PATH="/media/mmcblk1p1/
+
+path = "/etc/entomologist/"
+with open(path + "ento.conf",'r') as file:
+	data=json.load(file)
+DEVICE_SERIAL_ID = data["device"]["SERIAL_ID"]
+BUFFER_IMAGES_PATH="/media/mmcblk1p1/"
 def weather():
 	p = subprocess.Popen("/usr/sbin/weather/hts221", stdout=subprocess.PIPE, shell=True) # Use script file instead.
 	(output, err) = p.communicate()
