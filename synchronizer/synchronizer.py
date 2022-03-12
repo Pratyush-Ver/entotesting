@@ -69,6 +69,18 @@ def checkProvisonState():
 
         time.sleep(10)
 
+def compareTime(curHour,curMinute,ON_HOUR,ON_MINUTES,OFF_HOUR,OFF_MINUTES):
+    if (ON_HOUR<curHour and curHour<OFF_HOUR):
+        return True
+
+    if ((ON_HOUR<curHour) or (ON_HOUR==curHour and ON_MINUTES<=curMinute)):
+        if((curHour<OFF_HOUR) or (curHour==OFF_HOUR and curMinute<OFF_MINUTES)):
+            return True
+            
+    return False
+
+
+
 def mainLoop():
     global scriptStatus
     log.info("STARTING MAIN LOOP..")
@@ -81,16 +93,16 @@ def mainLoop():
             duration=int(data['device']['TEST_DURATION'])*60
             testDevice(duration)
         
-        ON_TIME,ON_MINUTES=map(int,data['device']['ON_TIME'].split(":"))
-        OFF_TIME,OFF_MINUTES=map(int,data['device']['OFF_TIME'].split(":"))
+        ON_HOUR,ON_MINUTES=map(int,data['device']['ON_TIME'].split(":"))
+        OFF_HOUR,OFF_MINUTES=map(int,data['device']['OFF_TIME'].split(":"))
 
         curTime=datetime.now()
         curMinute=curTime.minute
-        curTime=curTime.hour
+        curHour=curTime.hour
 
         #Implement the raw logic of testFlag
 
-        if ON_TIME<=curTime and curTime<OFF_TIME and ON_MINUTES<=curMinute and curMinute<OFF_MINUTES:
+        if compareTime(curHour,curMinute,ON_HOUR,ON_MINUTES,OFF_HOUR,OFF_MINUTES):
             if not scriptStatus:
                 #Start both the services and write the status of the service in the status file
                 subprocess.call(["systemctl","restart","cam"])
