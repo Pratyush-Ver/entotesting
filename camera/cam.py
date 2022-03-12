@@ -58,7 +58,7 @@ class MotionRecorder(object):
     def save_recording(self):
         if self.img_counter >= 1:   
             now = datetime.now()
-            video_name = str(now.year) + str(format(now.month,'02d')) + str(format(now.day,'02d')) + str(format(now.hour,'02d')) + str(format(now.minute,'02d')) + str(format(now.second,'02d')) + "_" + DEVICE_SERIAL_ID + ".avi"  
+            video_name = f"{format(now.day,'02d')}-{format(now.month,'02d')}-{now.year}_{format(now.hour,'02d')}:{format(now.minute,'02d')}:{format(now.second,'02d')}_{DEVICE_SERIAL_ID}.avi"  
             out = cv2.VideoWriter(BUFFER_IMAGES_PATH+video_name, self.fourcc, self.fps, (640,480))
             print(video_name)
             log.info("Video crealog.info("")ted and saved -> "+video_name)
