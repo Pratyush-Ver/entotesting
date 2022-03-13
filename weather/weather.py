@@ -1,4 +1,4 @@
-import datetime as dt
+from datetime import datetime
 import subprocess
 import time
 import logging as log
@@ -20,8 +20,9 @@ def weather():
 	#print("Command output : ", output)
 	#print("Command exit status/return code : ", p_status)
 	tim = str(time.time())
+	now = datetime.now()
 	tim = tim.replace(".", "_")
-	string=f"{STORAGE_PATH}weather_{tim}_{DEVICE_SERIAL_ID}.txt"
+	string=f"{STORAGE_PATH}weather_{format(now.day,'02d')}-{format(now.month,'02d')}-{now.year}_{format(now.hour,'02d')}:{format(now.minute,'02d')}:{format(now.second,'02d')}_{DEVICE_SERIAL_ID}.txt"
 	file = open(string, "a")
 	file.writelines("\n"+tim+" , "+", ".join(str(output)[2:len(output)-1].split("\\n"))+" , "+lux+"\n")
 	file.close()
