@@ -8,7 +8,11 @@ import ast
 import time
 import multiprocessing
 
-BUFFER_IMAGES_PATH = '/media/mmcblk1p1/'
+path = "/etc/entomologist/"
+with open(path + "ento.conf",'r') as file:
+	data=json.load(file)
+DEVICE_SERIAL_ID = data["device"]["SERIAL_ID"]
+BUFFER_IMAGES_PATH = data["device"]["STORAGE_PATH"]
 
 uploaded = 0
 batchSize = 0 

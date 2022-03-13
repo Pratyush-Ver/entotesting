@@ -9,7 +9,7 @@ path = "/etc/entomologist/"
 with open(path + "ento.conf",'r') as file:
 	data=json.load(file)
 DEVICE_SERIAL_ID = data["device"]["SERIAL_ID"]
-BUFFER_IMAGES_PATH="/media/mmcblk1p1/"
+STORAGE_PATH=data["device"]["STORAGE_PATH"]
 def weather():
 	p = subprocess.Popen("/usr/sbin/weather/hts221", stdout=subprocess.PIPE, shell=True) # Use script file instead.
 	(output, err) = p.communicate()
@@ -21,7 +21,7 @@ def weather():
 	#print("Command exit status/return code : ", p_status)
 	tim = str(time.time())
 	tim = tim.replace(".", "_")
-	string=f"{BUFFER_IMAGES_PATH}weather_{tim}_{DEVICE_SERIAL_ID}.txt"
+	string=f"{STORAGE_PATH}weather_{tim}_{DEVICE_SERIAL_ID}.txt"
 	file = open(string, "a")
 	file.writelines("\n"+tim+" , "+", ".join(str(output)[2:len(output)-1].split("\\n"))+" , "+lux+"\n")
 	file.close()

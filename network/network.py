@@ -14,6 +14,7 @@ FILE = os.path.join(os.getcwd(), "networkinfo.log")
 path = "/etc/entomologist/"
 with open(path + "ento.conf",'r') as file:
 	data=json.load(file)
+bucket=data["device"]["IP_BUCKET"]
 def ping():
     # to ping a particular IP
     try:
