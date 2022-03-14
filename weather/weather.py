@@ -22,7 +22,7 @@ def weather():
 	tim = str(time.time())
 	now = datetime.now()
 	tim = tim.replace(".", "_")
-	string=f"{STORAGE_PATH}weather_{format(now.day,'02d')}-{format(now.month,'02d')}-{now.year}_{format(now.hour,'02d')}:{format(now.minute,'02d')}:{format(now.second,'02d')}_{DEVICE_SERIAL_ID}.txt"
+	string=f"{STORAGE_PATH}weather_{now.strftime("%d-%m-%Y_%H-%M-%S")}_{DEVICE_SERIAL_ID}.txt"
 	file = open(string, "a")
 	file.writelines("\n"+tim+" , "+", ".join(str(output)[2:len(output)-1].split("\\n"))+" , "+lux+"\n")
 	file.close()
