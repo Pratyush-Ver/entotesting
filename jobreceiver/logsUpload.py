@@ -7,7 +7,7 @@ import json
 with open("/etc/entomologist/ento.conf","r") as file:
   data = json.load(file)
 
-bucket_name = data["IP_BUCKET"]
+bucket_name = data["device"]["IP_BUCKET"]
 
 log_file_path = 'logFiles/'
 
