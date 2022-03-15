@@ -114,7 +114,7 @@ def main():
                  
                 # if connection not acquired
                 subprocess.call(["/usr/sbin/4g/4g.sh"])
-                time.sleep(5)
+                time.sleep(10)
             else:
                  
                 # if connection is acquired
@@ -154,10 +154,10 @@ def main():
                 #------------------------
                 #--reconnecting using 4g routine--
                 time.sleep(5)
-                subprocess.call(["/usr/sbin/4g/4g_restart.sh"])
+                subprocess.call(["/usr/sbin/4g/4g.sh"])
                 #------------------------
                 # infinite loop, will run till ping() return true
-                time.sleep(1)
+                time.sleep(8)
  
             up_time = datetime.datetime.now()
             # after loop breaks, connection restored
