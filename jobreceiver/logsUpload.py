@@ -9,7 +9,7 @@ with open("/etc/entomologist/ento.conf","r") as file:
 
 bucket_name = data["device"]["IP_BUCKET"]
 
-log_file_path = 'logFiles/'
+log_file_path = '/var/tmp/'
 
 def upload_log_file():
   log_files = os.listdir(log_file_path)

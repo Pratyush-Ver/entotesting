@@ -127,6 +127,7 @@ if __name__=="__main__":
     entoDataWriter('device','TEST_FLAG','False')
     writeInScriptStatus(False)
     checkProvisonState()
+    subprocess.call(["systemctl","restart","cloud"])
     log.info("Starting JOB reciever..")
     subprocess.call(["systemctl","restart","jobreceiver"])
     mainLoop()
